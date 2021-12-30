@@ -101,7 +101,9 @@
                   type="email"
                   id="email"
                   name="email"
-                /><br>
+                />
+                <div class="error-message"></div>
+                <br>
 
               </div>
 
@@ -113,7 +115,9 @@
                   type="date"
                   id="birthdate"
                   name="birthdate"
-                /><br>
+                />
+                <div class="error-message"></div>
+                <br>
                 
               </div>
 
@@ -121,6 +125,7 @@
 
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+                <div class="error-message"></div>
                 <br>
 
               </div>
@@ -199,8 +204,9 @@
                 />
                 <label class="checkbox-label" for="location6">
                   <span class="checkbox-icon"></span>
-                  Portland</label
-                >
+                  Portland</label>
+                
+                <div class="error-message"></div>
 
               </div>
 
@@ -216,7 +222,7 @@
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
-
+                <div class="error-message"></div>
                 <br>
 
                 <input 
@@ -228,7 +234,7 @@
                   <span class="checkbox-icon"></span>
                   Je souhaite être prévenu des prochains évènements.
                 </label>
-
+                <div class="error-message"></div>
                 <br>
 
               </div>
