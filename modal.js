@@ -78,6 +78,11 @@ function checkInputs() {
   //get input values
   const firstNameValue = firstName.value.trim();
   const lastNameValue = lastName.value.trim();
+  const emailValue = email.value.trim();
+  const birthdateValue = birthdate.value.trim();
+  const quantityValue = quantity.value.trim();
+  // const locationsValue = locations.value.trim();
+  // const generalConditionsValue = generalConditions.value.trim();
 
   //check first name
   if (firstNameValue.length < 2) {
@@ -92,4 +97,51 @@ function checkInputs() {
   } else {
     showValidation(lastName);
   }
+
+  //check email (regex)
+  if (!isEmailValid(emailValue)) {
+    showError(email, 'Veuillez enter une adresse mail valide');
+  } else {
+    showValidation(email);
+  }
+
+  //check birthdate (not null)
+  if (birthdateValue === '') {
+    showError(birthdate, 'Vous devez entrer votre date de naissance.');
+  } else {
+    showValidation(birthdate);
+  }
+
+  // check quantity (must be number)
+  if (quantityValue === '') {
+    showError(quantity, 'Vous devez entrer le nombre de tournois auquels vous avez participé.');
+  } else if (isNaN(quantityValue)) {
+    showError(quantity, 'Vous devez entrer un nombre.');
+  } else {
+    showValidation(quantity);
+  }
+
+  // check locations (not null)
+  // if (locationsValue === '') {
+  //   showError(locations, 'Vous devez choisir une option.');
+  // } else {
+  //   showValidation(locations);
+  // }
+
+  // general conditions (not null, required)
+  // if (generalConditionsValue === '') {
+  //   showError(generalConditions, 'Vous devez vérifier que vous acceptez les termes et conditions.');
+  // } else {
+  //   showValidation(generalConditions);
+  // }
 }
+
+//regex validation for email
+function isEmailValid(email) {
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+}
+
+//regex validation for numbers (quantity) (if needed)
+// function isNumberValid(quantity) {
+//   return /^[0-9]+$/.test(quantity)
+// }
