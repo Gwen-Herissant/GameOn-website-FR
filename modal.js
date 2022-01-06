@@ -75,8 +75,6 @@ function checkInputs() {
   const emailValue = email.value.trim();
   const birthdateValue = birthdate.value.trim();
   const quantityValue = quantity.value.trim();
-  // const locationsValue = locations.value.trim();
-  // const generalConditionsValue = generalConditions.value.trim();
 
   //check first name
   //get element to put text into
@@ -123,9 +121,10 @@ function checkInputs() {
     //write message
     birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
     showErrorBorder(birthdate);
-  } else if (!isDateValid(birthdateValue)) {
-    //write message
-    birthdateErrorMessage.innerText = 'Vous devez entrer une date valide.';
+  // } else if (!isDateValid(birthdateValue)) {
+  //   //write message
+  //   birthdateErrorMessage.innerText = 'Vous devez entrer une date valide.';
+  //   showErrorBorder(birthdate);
   } else if (usersBirthdate > today) {
     //write message
     birthdateErrorMessage.innerText = 'La date que vous avez entrer est dans le futur';
@@ -150,19 +149,28 @@ function checkInputs() {
     showValidation(quantity);
   }
 
-  // check locations (not null)
-  // if (locationsValue === '') {
-  //   showError(locations, 'Vous devez choisir une option.');
-  // } else {
-  //   showValidation(locations);
-  // }
+  // check locations
+  const locationErrorMessage = document.querySelector('#location-message');
+  let oneOptionIsChecked = false;
+  for (let location of locations) {
+    if (location.checked) {
+      oneOptionIsChecked = true;
+      break;
+    }
+  }
+  if (!oneOptionIsChecked) {
+    locationErrorMessage.innerText = 'Vous devez choisr une option.';
+  } else {
+    locationErrorMessage.innerText = "";
+  }
 
-  // general conditions (not null, required)
-  // if (generalConditionsValue === '') {
-  //   showError(generalConditions, 'Vous devez vérifier que vous acceptez les termes et conditions.');
-  // } else {
-  //   showValidation(generalConditions);
-  // }
+  // check general conditions
+  const generalConditionsErrorMessage = document.querySelector('#checkbox1-message');
+  if (generalConditions.checked == false) {
+    generalConditionsErrorMessage.innerText = 'Vous devez vérifier que vous acceptez les termes et conditions.'
+  } else {
+    generalConditionsErrorMessage.innerText = "";
+  }
 }
 
 //regex validation for email
@@ -171,9 +179,9 @@ function isEmailValid(email) {
 }
 
 //regex validation for dates
-function isDateValid(birthdate) {
-  return /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(birthdate);
-}
+// function isDateValid(birthdate) {
+//   return /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(birthdate);
+// }
 
 //calculate age 
 function calculateAge() {
