@@ -74,7 +74,7 @@
                   id="first"
                   name="first"
                 />
-                <div class="error-message"></div>
+                <div id="first-message" class="error-message"></div>
                 <br>
 
               </div>
@@ -88,7 +88,7 @@
                   id="last"
                   name="last"
                 />
-                <div class="error-message"></div>
+                <div id="last-message" class="error-message"></div>
                 <br>
                 
               </div>
@@ -102,7 +102,7 @@
                   id="email"
                   name="email"
                 />
-                <div class="error-message"></div>
+                <div id="email-message" class="error-message"></div>
                 <br>
 
               </div>
@@ -116,7 +116,7 @@
                   id="birthdate"
                   name="birthdate"
                 />
-                <div class="error-message"></div>
+                <div id="birthdate-message" class="error-message"></div>
                 <br>
                 
               </div>
@@ -124,8 +124,8 @@
               <div class="formData">
 
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
-                <div class="error-message"></div>
+                <input class="text-control" id="quantity" name="quantity">
+                <div id="quantity-message" class="error-message"></div>
                 <br>
 
               </div>
@@ -206,7 +206,7 @@
                   <span class="checkbox-icon"></span>
                   Portland</label>
                 
-                <div class="error-message"></div>
+                <div id="location-message" class="error-message"></div>
 
               </div>
 
@@ -218,11 +218,11 @@
                   id="checkbox1"
                   checked
                 />
-                <label class="checkbox2-label" for="checkbox1">
+                <label class="checkbox1-label" for="checkbox1">
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
-                <div class="error-message"></div>
+                <div id="checkbox1-message" class="error-message"></div>
                 <br>
 
                 <input 
@@ -234,7 +234,6 @@
                   <span class="checkbox-icon"></span>
                   Je souhaite être prévenu des prochains évènements.
                 </label>
-                <div class="error-message"></div>
                 <br>
 
               </div>

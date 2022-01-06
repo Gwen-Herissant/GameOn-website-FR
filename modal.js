@@ -29,7 +29,6 @@ const locations = [
 ];
 const generalConditions = document.getElementById("checkbox1");
 const newsletter = document.getElementById("checkbox2");
-const errorMessage = document.querySelector('.error-message');
 
 
 // launch modal event
@@ -56,19 +55,63 @@ form.addEventListener('submit', (e) => {
   checkInputs();
 })
 
-//show error message and styles
-function showError(input, message) {
-  //get element to right text into
-  // const errorMessage = document.querySelector('.error-message');
-  //write message
-  errorMessage.innerText = message;
+//error functions for each input :
+
+//error style change 
+function showErrorBorder(input) {
   //change border color
   input.style.border = '2px solid #e54858';
+}
+
+//show error for firstName
+function showError_first(input) {
+  //get element to put text into
+  const firstErrorMessage = document.querySelector('#first-message');
+  //write message
+  firstErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du prénom.';
+};
+
+//show error for lastName
+function showError_last(input) {
+  //get element to put text into
+  const lastErrorMessage = document.querySelector('#last-message');
+  //write message
+  lastErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du nom.';
+};
+
+//show error for email
+function showError_email(input) {
+  //get element to put text into
+  const emailErrorMessage = document.querySelector('#email-message');
+  //write message
+  emailErrorMessage.innerText = 'Veuillez enter une adresse mail valide';
+};
+
+//show error for birthdate
+function showError_birthdate(input) {
+  //get element to put text into
+  const birthdateErrorMessage = document.querySelector('#birthdate-message');
+  //write message
+  birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
+};
+
+//show errors for quantity
+function showError_quantityEmpty(input) {
+  //get element to put text into
+  const quantityErrorMessage = document.querySelector('#quantity-message');
+  //write message
+  quantityErrorMessage.innerText = 'Vous devez entrer le nombre de tournois auquels vous avez participé.';
+};
+
+function showError_quantityNaN(input) {
+  //get element to put text into
+  const quantityErrorMessage = document.querySelector('#quantity-message');
+  //write message
+  quantityErrorMessage.innerText = 'Vous devez entrer un nombre.';
 };
 
 //show validation
 function showValidation(input) {
-  errorMessage.innerText = '';
   //change broder color
   input.style.border = '2px solid #279e7a';
 };
@@ -86,37 +129,43 @@ function checkInputs() {
 
   //check first name
   if (firstNameValue.length < 2) {
-    showError(firstName, 'Veuillez entrer 2 caractères ou plus pour le champ du prénom.');
+    showError_first(firstName);
+    showErrorBorder(firstName);
   } else {
     showValidation(firstName);
   }
 
   //check last name 
   if (lastNameValue.length < 2) {
-    showError(lastName, 'Veuillez entrer 2 caractères ou plus pour le champ du nom.');
+    showError_last(lastName);
+    showErrorBorder(lastName);
   } else {
     showValidation(lastName);
   }
 
   //check email (regex)
   if (!isEmailValid(emailValue)) {
-    showError(email, 'Veuillez enter une adresse mail valide');
+    showError_email(email);
+    showErrorBorder(email);
   } else {
     showValidation(email);
   }
 
   //check birthdate (not null)
   if (birthdateValue === '') {
-    showError(birthdate, 'Vous devez entrer votre date de naissance.');
+    showError_birthdate(birthdate);
+    showErrorBorder(birthdate);
   } else {
     showValidation(birthdate);
   }
 
   // check quantity (must be number)
   if (quantityValue === '') {
-    showError(quantity, 'Vous devez entrer le nombre de tournois auquels vous avez participé.');
+    showError_quantityEmpty(quantity);
+    showErrorBorder(quantity);
   } else if (isNaN(quantityValue)) {
-    showError(quantity, 'Vous devez entrer un nombre.');
+    showError_quantityNaN(quantity);
+    showErrorBorder(quantity);
   } else {
     showValidation(quantity);
   }
@@ -138,10 +187,5 @@ function checkInputs() {
 
 //regex validation for email
 function isEmailValid(email) {
-  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
 }
-
-//regex validation for numbers (quantity) (if needed)
-// function isNumberValid(quantity) {
-//   return /^[0-9]+$/.test(quantity)
-// }
