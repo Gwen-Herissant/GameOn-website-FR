@@ -55,60 +55,11 @@ form.addEventListener('submit', (e) => {
   checkInputs();
 })
 
-//error functions for each input :
-
 //error style change 
 function showErrorBorder(input) {
   //change border color
   input.style.border = '2px solid #e54858';
 }
-
-//show error for firstName
-function showError_first(input) {
-  //get element to put text into
-  const firstErrorMessage = document.querySelector('#first-message');
-  //write message
-  firstErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du prénom.';
-};
-
-//show error for lastName
-function showError_last(input) {
-  //get element to put text into
-  const lastErrorMessage = document.querySelector('#last-message');
-  //write message
-  lastErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du nom.';
-};
-
-//show error for email
-function showError_email(input) {
-  //get element to put text into
-  const emailErrorMessage = document.querySelector('#email-message');
-  //write message
-  emailErrorMessage.innerText = 'Veuillez enter une adresse mail valide';
-};
-
-//show error for birthdate
-function showError_birthdate(input) {
-  //get element to put text into
-  const birthdateErrorMessage = document.querySelector('#birthdate-message');
-  //write message
-  birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
-};
-
-//show errors for quantity
-function showError_quantityEmpty(input) {
-  //get element to put text into
-  const quantityErrorMessage = document.querySelector('#quantity-message');
-  //write message
-  quantityErrorMessage.innerText = 'Vous devez entrer le nombre de tournois auquels vous avez participé.';
-};
-
-function showError_quantityNaN(input) {
-  //get element to put text into
-  const quantityErrorMessage = document.querySelector('#quantity-message');
-  //write message
-  quantityErrorMessage.innerText = 'Vous devez entrer un nombre.';
-};
 
 //show validation
 function showValidation(input) {
@@ -128,45 +79,71 @@ function checkInputs() {
   // const generalConditionsValue = generalConditions.value.trim();
 
   //check first name
+  //get element to put text into
+  const firstErrorMessage = document.querySelector('#first-message');
   if (firstNameValue.length < 2) {
-    showError_first(firstName);
+  //write message
+    firstErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du prénom.';
     showErrorBorder(firstName);
   } else {
+    firstErrorMessage.innerText = "";
     showValidation(firstName);
   }
 
   //check last name 
+  //get element to put text into
+  const lastErrorMessage = document.querySelector('#last-message');
   if (lastNameValue.length < 2) {
-    showError_last(lastName);
+    //write message
+    lastErrorMessage.innerText = 'Veuillez entrer 2 caractères ou plus pour le champ du nom.';
     showErrorBorder(lastName);
   } else {
+    lastErrorMessage.innerText = "";
     showValidation(lastName);
   }
 
   //check email (regex)
+  //get element to put text into
+  const emailErrorMessage = document.querySelector('#email-message');
   if (!isEmailValid(emailValue)) {
-    showError_email(email);
+    //write message
+    emailErrorMessage.innerText = 'Veuillez enter une adresse mail valide';
     showErrorBorder(email);
   } else {
+    emailErrorMessage.innerText = "";
     showValidation(email);
   }
 
-  //check birthdate (not null)
+  //check birthdate 
+  //get element to put text into
+  const birthdateErrorMessage = document.querySelector('#birthdate-message');
+  let today = new Date();
+  let usersBirthdate = new Date(birthdateValue);
   if (birthdateValue === '') {
-    showError_birthdate(birthdate);
+    //write message
+    birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
+    showErrorBorder(birthdate);
+  } else if (usersBirthdate > today) {
+    //write message
+    birthdateErrorMessage.innerText = 'La date que vous avez entrer est dans le futur';
     showErrorBorder(birthdate);
   } else {
-    showValidation(birthdate);
+    calculateAge();
   }
 
   // check quantity (must be number)
-  if (quantityValue === '') {
-    showError_quantityEmpty(quantity);
+  //get element to put text into
+  const quantityErrorMessage = document.querySelector('#quantity-message');
+  if (quantityValue === '' || quantityValue < 0) {
+    //write message
+    quantityErrorMessage.innerText = 'Vous devez entrer le nombre de tournois auquels vous avez participé.';
     showErrorBorder(quantity);
   } else if (isNaN(quantityValue)) {
-    showError_quantityNaN(quantity);
+    //write message
+    quantityErrorMessage.innerText = 'Vous devez entrer un nombre.';
     showErrorBorder(quantity);
   } else {
+    quantityErrorMessage.innerText = "";
     showValidation(quantity);
   }
 
@@ -188,4 +165,30 @@ function checkInputs() {
 //regex validation for email
 function isEmailValid(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
+}
+
+
+//calculate age 
+function calculateAge() {
+  //get user input
+  const birthdateInput = document.querySelector('#birthdate').value;
+  //turn it into a date
+  const dateOfBirth = new Date(birthdateInput);
+  //get today's date
+  const currentDate = new Date();
+
+  const age = currentDate.getFullYear() - dateOfBirth.getFullYear();
+  const month = currentDate.getMonth() - dateOfBirth.getMonth();
+  
+  //get element to put text into
+  const birthdateErrorMessage = document.querySelector('#birthdate-message');
+  if (age < 16) {
+    //write message
+    birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans';
+    showErrorBorder(birthdate);
+  } else {
+    birthdateErrorMessage.innerText = "";
+    showValidation(birthdate);
+  }
+  return age;
 }
