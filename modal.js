@@ -123,6 +123,9 @@ function checkInputs() {
     //write message
     birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
     showErrorBorder(birthdate);
+  } else if (!isDateValid(birthdateValue)) {
+    //write message
+    birthdateErrorMessage.innerText = 'Vous devez entrer une date valide.';
   } else if (usersBirthdate > today) {
     //write message
     birthdateErrorMessage.innerText = 'La date que vous avez entrer est dans le futur';
@@ -167,6 +170,10 @@ function isEmailValid(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
 }
 
+//regex validation for dates
+function isDateValid(birthdate) {
+  return /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(birthdate);
+}
 
 //calculate age 
 function calculateAge() {
