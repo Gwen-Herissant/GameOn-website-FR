@@ -121,10 +121,6 @@ function checkInputs() {
     //write message
     birthdateErrorMessage.innerText = 'Vous devez entrer votre date de naissance.';
     showErrorBorder(birthdate);
-  // } else if (!isDateValid(birthdateValue)) {
-  //   //write message
-  //   birthdateErrorMessage.innerText = 'Vous devez entrer une date valide.';
-  //   showErrorBorder(birthdate);
   } else if (usersBirthdate > today) {
     //write message
     birthdateErrorMessage.innerText = 'La date que vous avez entrer est dans le futur';
@@ -171,6 +167,8 @@ function checkInputs() {
   } else {
     generalConditionsErrorMessage.innerText = "";
   }
+
+  return true;
 }
 
 //regex validation for email
@@ -178,32 +176,50 @@ function isEmailValid(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
 }
 
-//regex validation for dates
-// function isDateValid(birthdate) {
-//   return /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(birthdate);
-// }
-
 //calculate age 
 function calculateAge() {
   //get user input
   const birthdateInput = document.querySelector('#birthdate').value;
   //turn it into a date
   const dateOfBirth = new Date(birthdateInput);
-  //get today's date
+  //get dates for verification
   const currentDate = new Date();
-
-  const age = currentDate.getFullYear() - dateOfBirth.getFullYear();
-  const month = currentDate.getMonth() - dateOfBirth.getMonth();
+  const birthYear = dateOfBirth.getFullYear();
+  const currentYear = currentDate.getFullYear();
+  const birthMonth = dateOfBirth.getMonth();
+  const currentMonth = currentDate.getMonth();
+  const birthDay = dateOfBirth.getDay();
+  const currentDay = currentDate.getDay();
+  
   
   //get element to put text into
   const birthdateErrorMessage = document.querySelector('#birthdate-message');
-  if (age < 16) {
-    //write message
-    birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans';
-    showErrorBorder(birthdate);
-  } else {
+  if (currentYear - birthYear > 16) {
     birthdateErrorMessage.innerText = "";
     showValidation(birthdate);
+  } else if (currentYear - birthYear < 16) {
+    birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans pour participer.'
+    showErrorBorder(birthdate);
+  } else if (currentMonth > birthMonth) {
+    birthdateErrorMessage.innerText = "";
+    showValidation(birthdate);
+  } else if (currentMonth < birthMonth) {
+    birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans pour participer.'
+    showErrorBorder(birthdate);
+  } else if (currentDay > birthDay) {
+    birthdateErrorMessage.innerText = "";
+    showValidation(birthdate);
+  } else if (currentDay < birthDay) {
+    birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans pour participer.'
+    showErrorBorder(birthdate);
   }
-  return age;
 }
+
+
+/*
+pour submit et msg de remerciement :
+- submit quand tout checkinput() = OK
+- retire form et affiche texte
+-> donc on click submit btn, submit form
+faire fonction qui dit que si checkinput return true, submit
+*/
