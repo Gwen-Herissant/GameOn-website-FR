@@ -171,9 +171,11 @@ function checkInputs() {
   }
 
   //check that all inputs are valid
-  if (document.querySelector('input').classList.contains("isValid")) {
+  if (document.getElementsByTagName('input').classList.contains("isValid")) {
     console.log('all inputs are valid !');
-  return true;
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -238,6 +240,8 @@ function confirmationMessage() {
     modalBody.appendChild(messageContainer);
     //ajoute texte
     messageContainer.textContent = 'Merci pour votre inscription.';
+    messageContainer.style.textAlign = 'center';
+    messageContainer.style.margin = '25% auto';
     //create btn
     let messageBtn = document.createElement('div');
     //ajoute class recuperant styles
@@ -246,6 +250,9 @@ function confirmationMessage() {
     modalBody.appendChild(messageBtn);
     //ajoute texte
     messageBtn.innerText = 'Fermer';
+    messageBtn.style.width = '40%';
+    messageBtn.style.textAlign = 'center';
+    messageBtn.style.margin = '20% auto';
     //close modal after validation message
     messageBtn.addEventListener('click', closeModal);
   }
