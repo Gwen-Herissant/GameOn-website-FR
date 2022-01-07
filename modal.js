@@ -28,7 +28,9 @@ const locations = [
   document.getElementById("location6")
 ];
 const generalConditions = document.getElementById("checkbox1");
-const newsletter = document.getElementById("checkbox2");
+
+//other global variables
+let oneOptionIsChecked = false; //set var as global for final validation of location input
 
 
 // launch modal event
@@ -48,17 +50,6 @@ function closeModal() {
   modalbg.style.display = 'none';
 }
 
-//prevent from submitting and run input validation
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  checkInputs();
-  isFormValid();
-
-  // //click event on submit button wich will run function for message
-  // const submitBtn = document.querySelector('.btn-submit');
-  // submitBtn.addEventListener('click', confirmationModal);
-})
 
 //error style change 
 function showErrorBorder(input) {
@@ -74,18 +65,21 @@ function showValidation(input) {
   input.classList.add('isValid');
 };
 
-//set location var as global for final validation
-let oneOptionIsChecked = false;
+
+//prevent from submitting and run input validation
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  checkInputs();
+  isFormValid();
+})
+
+
 //input validation
 function checkInputs() {
-  //get input values
-  const firstNameValue = firstName.value.trim();
-  const lastNameValue = lastName.value.trim();
-  const emailValue = email.value.trim();
-  const birthdateValue = birthdate.value.trim();
-  const quantityValue = quantity.value.trim();
 
   //check first name
+  const firstNameValue = firstName.value.trim();
   //get element to put text into
   const firstErrorMessage = document.querySelector('#first-message');
   if (firstNameValue.length < 2) {
@@ -98,6 +92,7 @@ function checkInputs() {
   }
 
   //check last name 
+  const lastNameValue = lastName.value.trim();
   //get element to put text into
   const lastErrorMessage = document.querySelector('#last-message');
   if (lastNameValue.length < 2) {
@@ -110,6 +105,7 @@ function checkInputs() {
   }
 
   //check email (regex)
+  const emailValue = email.value.trim();
   //get element to put text into
   const emailErrorMessage = document.querySelector('#email-message');
   if (!isEmailValid(emailValue)) {
@@ -122,6 +118,7 @@ function checkInputs() {
   }
 
   //check birthdate 
+  const birthdateValue = birthdate.value.trim();
   //get element to put text into
   const birthdateErrorMessage = document.querySelector('#birthdate-message');
   let today = new Date();
@@ -139,6 +136,7 @@ function checkInputs() {
   }
 
   // check quantity (must be number)
+  const quantityValue = quantity.value.trim();
   //get element to put text into
   const quantityErrorMessage = document.querySelector('#quantity-message');
   if (quantityValue === '' || quantityValue < 0) {
@@ -156,18 +154,18 @@ function checkInputs() {
 
   // check locations
   const locationErrorMessage = document.querySelector('#location-message');
-  // let oneOptionIsChecked = false;
+  //loop through every radio btn to see if one is checked
   for (let location of locations) {
     if (location.checked) {
       oneOptionIsChecked = true;
       break;
     }
   }
+  //actual validation based on previous loop
   if (!oneOptionIsChecked) {
     locationErrorMessage.innerText = 'Vous devez choisir une option.';
   } else {
     locationErrorMessage.innerText = "";
-    
   }
 
   // check general conditions
@@ -180,10 +178,12 @@ function checkInputs() {
   }
 }
 
+
 //regex validation for email
 function isEmailValid(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
 }
+
 
 //calculate age 
 function calculateAge() {
@@ -202,6 +202,7 @@ function calculateAge() {
   
   //get element to put text into
   const birthdateErrorMessage = document.querySelector('#birthdate-message');
+  //get precise age based on difference with current date
   if (currentYear - birthYear > 16) {
     birthdateErrorMessage.innerText = "";
     showValidation(birthdate);
@@ -223,6 +224,7 @@ function calculateAge() {
   }
 }
 
+
 //check that all inputs are valid before submitting
 function isFormValid() {
   if (
@@ -240,7 +242,8 @@ function isFormValid() {
   }
 }
 
-//confirmation message 
+
+//confirmation modal with message
 function confirmationModal() {
     //recupère modal-body
     const modalBody = document.querySelector('.modal-body');
