@@ -237,8 +237,9 @@ function isFormValid() {
     generalConditions.classList.contains('isValid') 
   ) {
     console.log('all inputs are valid !')
-    const submitBtn = document.querySelector('.btn-submit');
-    submitBtn.addEventListener('click', confirmationModal);
+    
+    //run final function confirming form validation
+    confirmationModal();
   }
 }
 
