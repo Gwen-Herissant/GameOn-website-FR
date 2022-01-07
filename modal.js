@@ -65,6 +65,8 @@ function showErrorBorder(input) {
 function showValidation(input) {
   //change broder color
   input.style.border = '2px solid #279e7a';
+  //add class to html
+  input.classList.add('isValid');
 };
 
 //input validation
@@ -168,7 +170,11 @@ function checkInputs() {
     generalConditionsErrorMessage.innerText = "";
   }
 
+  //check that all inputs are valid
+  if (document.querySelector('input').classList.contains("isValid")) {
+    console.log('all inputs are valid !');
   return true;
+  }
 }
 
 //regex validation for email
@@ -190,7 +196,6 @@ function calculateAge() {
   const currentMonth = currentDate.getMonth();
   const birthDay = dateOfBirth.getDay();
   const currentDay = currentDate.getDay();
-  
   
   //get element to put text into
   const birthdateErrorMessage = document.querySelector('#birthdate-message');
@@ -215,11 +220,63 @@ function calculateAge() {
   }
 }
 
+//click event on submit button wich will run function for message
+const submitBtn = document.querySelector('.btn-submit');
+submitBtn.addEventListener('click', confirmationMessage);
+
+//confirmation message 
+function confirmationMessage() {
+    //recupère modal-body
+    const modalBody = document.querySelector('.modal-body');
+    //retire form
+    modalBody.innerHTML = "";
+    //créer conteneur pour msg
+    let messageContainer = document.createElement('div');
+    //ajoute class au conteneur
+    messageContainer.classList.add('confirmation-message');
+    //append to modalBody
+    modalBody.appendChild(messageContainer);
+    //ajoute texte
+    messageContainer.textContent = 'Merci pour votre inscription.';
+    //create btn
+    let messageBtn = document.createElement('div');
+    //ajoute class recuperant styles
+    messageBtn.classList.add('btn-signup', 'btn-message');
+    //append to modal body
+    modalBody.appendChild(messageBtn);
+    //ajoute texte
+    messageBtn.innerText = 'Fermer';
+    //close modal after validation message
+    messageBtn.addEventListener('click', closeModal);
+  }
+
 
 /*
-pour submit et msg de remerciement :
-- submit quand tout checkinput() = OK
-- retire form et affiche texte
--> donc on click submit btn, submit form
-faire fonction qui dit que si checkinput return true, submit
+On laisse prevent default, le but est d'avoir le msg, pas d'envoyer des donner (pas mon boulot)
+donc il faut verifier qs même que tout est validé pour eveiter erreur, puis au click, affiché le msg.
+
+- loop sur input pour verifier validations à la fin de checkInputs()
+  if (document.querySelectorAll('input').classList.contains("isValid")) {
+    return true;
+  }
+
+- click sur btn submit
+  submitBtn.addEventListener('click', confirmationMessage);
+
+- affiche message
+  function confirmationMessage () {
+    //recupère modal-body
+    const modalBody = document.querySelector('.modal-body');
+    modalBody.createElement('div')
+    div.classList.add('confirmation-message')
+    document.querySelector('.confirmation-message').innerText = 'Merci pour votre inscription.'
+  }
+
+- btn change de texte
+  ? document.querySelector('.btn-submit').innerText = 'Fermer' ?
+                                         .innerHTML = 'Fermer' ?
+
+- btn change de fonction : recupère celle de la croix closeModal
+  messageBtn.addEventListener('click', closeModal);
+}
 */
