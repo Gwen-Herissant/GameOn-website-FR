@@ -132,7 +132,9 @@ function checkInputs() {
     birthdateErrorMessage.innerText = 'La date que vous avez entrer est dans le futur';
     showErrorBorder(birthdate);
   } else {
-    calculateAge();
+    //get user input
+    const birthdateInput = document.querySelector('#birthdate').value;
+    calculateAge(new Date(birthdateInput));
   }
 
   // check quantity (must be number)
@@ -185,12 +187,10 @@ function isEmailValid(email) {
 }
 
 
+
+
 //calculate age 
-function calculateAge() {
-  //get user input
-  const birthdateInput = document.querySelector('#birthdate').value;
-  //turn it into a date
-  const dateOfBirth = new Date(birthdateInput);
+function calculateAge(dateOfBirth) {
   //get dates for verification
   const currentDate = new Date();
   const birthYear = dateOfBirth.getFullYear();
@@ -215,7 +215,7 @@ function calculateAge() {
   } else if (currentMonth < birthMonth) {
     birthdateErrorMessage.innerText = 'Vous devez avoir au moins 16 ans pour participer.'
     showErrorBorder(birthdate);
-  } else if (currentDay > birthDay) {
+  } else if (currentDay >= birthDay) {
     birthdateErrorMessage.innerText = "";
     showValidation(birthdate);
   } else if (currentDay < birthDay) {
