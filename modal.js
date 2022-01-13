@@ -176,11 +176,6 @@ function checkInputs() {
     generalConditionsErrorMessage.innerText = "";
     generalConditions.classList.add('isValid');
   }
-
-  // refresh page after submitting
-  setTimeout((windowOff = () => {
-      window.location.reload();
-    }), 2000);
 }
 
 
