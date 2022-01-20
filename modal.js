@@ -178,14 +178,14 @@ function checkInputs() {
     generalConditionsErrorMessage.innerText = "";
     generalConditions.classList.add('isValid');
   }
-}
+}  //End of checkInputs() Function
+
 
 
 //regex validation for email
 function isEmailValid(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
 }
-
 
 
 
@@ -225,6 +225,7 @@ function calculateAge(dateOfBirth) {
 }
 
 
+
 //check that all inputs are valid before submitting
 function isFormValid() {
   if (
@@ -242,6 +243,7 @@ function isFormValid() {
     confirmationModal();
   }
 }
+
 
 
 //confirmation modal with message
