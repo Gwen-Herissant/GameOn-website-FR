@@ -48,6 +48,11 @@ closeBtn.addEventListener('click', closeModal);
 //close modal form
 function closeModal() {
   modalbg.style.display = 'none';
+
+  // refresh page (and form) after submitting or closing modal
+  setTimeout((windowOff = () => {
+    window.location.reload();
+  }), 1000);
 }
 
 
